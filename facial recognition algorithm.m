@@ -1,44 +1,3 @@
-% Exercise 14.1
-%{
-D = [-1 3; 1 4; 3 4; 7 5; 10 9]
-%plot(D(:,1),D(:,2),"x")
-D1 = 0.5*[D(:,1) - mean(D(:,1)), D(:,2) - mean(D(:,2))]
-hold on
-plot(D1(:,1),D1(:,2),"x")
-dot = D1'*D1
-[V,D] = eig(dot)
-V1 = V
-quiver(0,0,V1(1,1),V1(2,1))
-quiver(0,0,V1(1,2),V1(2,2))
-xlim([-5,5])
-ylim([-5,5])
-reduc = D1*V1(:,2)
-B = reduc
-plot(-reduc*0.8963,-reduc*0.4435,".")
-hold off
-%}
-
-% Exercise 14.3
-%{
-Repo = [b_tr,w_tr,s_tr];
-R = transpose(Repo)*Repo;
-size(R);
-[V,D] = eig(R)
-T = [b_new - mean(b_new), w_new - mean(w_new), s_new - mean(s_new)];
-A = T*V;
-A_new = [A(:,2),A(:,3)];
-A_new1 = [0*A(:,1),A(:,2),A(:,3)];
-B = A_new1 - A;
-hold on
-plot3(A(:,1),A(:,2),A(:,3),".")
-plot3(A_new1(:,1),A_new1(:,2),A_new1(:,3),"x")
-xlim([-50 50])
-ylim([-50 50])
-zlim([-50 50])
-%}
-
-% Exercise 14.5
-
 %saving the training data into the variables 'train' and 'test'
 train = grayfaces_train;
 test = grayfaces_test;
@@ -58,24 +17,6 @@ trained = transpose(train1)*train1;
 %getting the eigenvectors and values for the correlation matrix
 [V,D] = eig(trained);
 d = nonzeros(D);
-
-%The following chunk of code doesn't mean anything,
-%I was testing out different approaches
-%{
-%train3 = train2*V;
-%ans = train2*smile_train;
-%train4 = train2*V1;
-%test4 = test2*V1;
-%train4-test4;
-%var = transpose(train4)*test4;
-%train5 = reshape(train4,64,64,10);
-%test5 = reshape(test4,64,64,10);
-%imagesc(train5(:,:,10));
-%imagesc(test5(:,:,10));
-%train6 = transpose(train4)*train2;
-%test6 = transpose(test4)*test2;
-%}
-
 
 %The first for-loop iterates through different numbers of eigenfaces with
 %the highest eigenvalues to see their accuracies.
